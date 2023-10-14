@@ -1,7 +1,8 @@
-const { generateError } = require("../helpers");
-const jwt = require("jsonwebtoken");
+import { generateError } from "../helpers.js";
 
-const authUser = (req, res, next) => {
+import jwt from "jsonwebtoken";
+
+export const authUser = (req, res, next) => {
   try {
     const { authorization } = req.headers;
     if (!authorization) {
@@ -32,5 +33,3 @@ const authUser = (req, res, next) => {
     next(error);
   }
 };
-
-module.exports = { authUser };

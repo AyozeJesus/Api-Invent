@@ -1,5 +1,6 @@
 require("dotenv").config();
-const { getConnection } = require("./db");
+
+import {getConnection} from "./db";
 
 async function main() {
   let connection;

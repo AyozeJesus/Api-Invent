@@ -1,6 +1,6 @@
-const Joi = require("joi");
+import Joi from "joi";
 
-const newShipmentSchema = Joi.object({
+export const newShipmentSchema = Joi.object({
   destination_address: Joi.string().max(255).required(),
   postal_code: Joi.string()
     .pattern(/^\d{5}$/)
@@ -13,11 +13,6 @@ const newShipmentSchema = Joi.object({
   price: Joi.number().precision(2).required(),
 });
 
-const getShipmentSchema = Joi.object({
+export const getShipmentSchema = Joi.object({
   id: Joi.number().integer().min(1).required(),
 });
-
-module.exports = {
-  newShipmentSchema,
-  getShipmentSchema,
-};

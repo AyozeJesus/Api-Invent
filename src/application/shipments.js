@@ -1,7 +1,7 @@
-const { getConnection } = require("../db/db");
-const { generateError } = require("../helpers");
+import { getConnection } from "../infrastructure/UserRepository/db.js";
+import { generateError } from "../infrastructure/API/helpers.js";
 
-const calculatePackageCategory = (weight_kg) => {
+export const calculatePackageCategory = (weight_kg) => {
   if (weight_kg <= 0.1) {
     return "Paquete ultra ligero";
   } else if (weight_kg <= 0.3) {
@@ -15,7 +15,7 @@ const calculatePackageCategory = (weight_kg) => {
   }
 };
 
-const calculatePrice = (weight_kg, package_category) => {
+export const calculatePrice = (weight_kg, package_category) => {
   switch (package_category) {
     case "Paquete ultra ligero":
       return weight_kg * 5;
@@ -32,7 +32,7 @@ const calculatePrice = (weight_kg, package_category) => {
   }
 };
 
-const selectCarrier = (postal_code) => {
+export const selectCarrier = (postal_code) => {
   const postalCodeNumber = parseInt(postal_code);
 
   if (postalCodeNumber >= 15000 && postalCodeNumber <= 19999) {
@@ -44,7 +44,7 @@ const selectCarrier = (postal_code) => {
   }
 };
 
-const createShipment = async ({
+export const createShipment = async ({
   destination_address,
   postal_code,
   recipient_name,
@@ -79,7 +79,7 @@ const createShipment = async ({
   }
 };
 
-const listShipments = async () => {
+export const listShipments = async () => {
   let connection;
   try {
     connection = await getConnection();
@@ -92,7 +92,7 @@ const listShipments = async () => {
   }
 };
 
-const deleteShipmentById = async (id) => {
+export const deleteShipmentById = async (id) => {
   let connection;
 
   try {
@@ -110,7 +110,7 @@ const deleteShipmentById = async (id) => {
     if (connection) connection.release();
   }
 };
-const getShipmentById = async (id) => {
+export const getShipmentById = async (id) => {
   if (!id) {
     throw generateError("No se proporcionó un ID.", 400);
   }
@@ -133,14 +133,4 @@ const getShipmentById = async (id) => {
   } finally {
     if (connection) connection.release();
   }
-};
-
-module.exports = {
-  createShipment,
-  listShipments,
-  getShipmentById,
-  deleteShipmentById,
-  calculatePackageCategory,
-  calculatePrice,
-  selectCarrier,
 };

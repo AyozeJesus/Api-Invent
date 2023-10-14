@@ -1,9 +1,9 @@
-const { getConnection } = require("./db");
-const { generateError } = require("../helpers");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+import { getConnection } from "../infrastructure/UserRepository/db.js";
+import { generateError } from "../infrastructure/API/helpers.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
-const createUser = async ({ username, email, password }) => {
+export const createUser = async ({ username, email, password }) => {
   let connection;
   try {
     connection = await getConnection();
@@ -57,7 +57,7 @@ const createUser = async ({ username, email, password }) => {
   }
 };
 
-const login = async (email, password) => {
+export const login = async (email, password) => {
   let connection;
   try {
     connection = await getConnection();
@@ -106,7 +106,7 @@ const login = async (email, password) => {
   }
 };
 
-const getUserById = async (userId) => {
+export const getUserById = async (userId) => {
   let connection;
   try {
     connection = await getConnection();
@@ -120,7 +120,7 @@ const getUserById = async (userId) => {
   }
 };
 
-const getUserByEmail = async (email) => {
+export const getUserByEmail = async (email) => {
   let connection;
 
   try {
@@ -141,11 +141,4 @@ const getUserByEmail = async (email) => {
   } finally {
     if (connection) connection.release();
   }
-};
-
-module.exports = {
-  createUser,
-  login,
-  getUserById,
-  getUserByEmail,
 };

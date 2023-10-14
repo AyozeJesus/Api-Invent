@@ -3,10 +3,13 @@ import {
   listShipments,
   getShipmentById,
   deleteShipmentById,
-} from "../src/application/shipments";
+} from "../../../application/shipments.js";
+import { generateError } from "../helpers.js";
 
-import { generateError } from "../src/infrastructure/API/helpers";  
-import {newShipmentSchema, getShipmentSchema} from "../src/schemas/shipmentSchema"; 
+import {
+  newShipmentSchema,
+  getShipmentSchema,
+} from "../schemas/shipmentSchema.js";
 
 export const validateNewShipmenty = (req, res, next) => {
   const { error } = newShipmentSchema.validate(req.body);

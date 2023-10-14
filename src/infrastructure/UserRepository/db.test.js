@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-const db = require("./db");
+import * as db from "./db";
 // Crea un mock de la función createPool de mysql2/promise
 vi.mock("mysql2/promise", () => {
   return {

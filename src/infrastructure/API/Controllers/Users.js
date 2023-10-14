@@ -1,15 +1,14 @@
-import { generateError } from "../src/infrastructure/API/helpers";
-
+import { generateError } from "../helpers.js";
 import {
   createUser,
   login,
   getUserById,
   getUserByEmail,
-} from "../src/application/users";
-import { userSchema, loginSchema } from "../src/schemas/usersSchemas";
-
+} from "../../../application/users.js";
+import { userSchema, loginSchema } from "../schemas/usersSchemas.js";
 import { v4 as uuidv4 } from "uuid";
-const generateActivationToken = () => {
+
+export const generateActivationToken = () => {
   return uuidv4();
 };
 

@@ -1,12 +1,11 @@
-require("dotenv").config();
-const express = require("express");
-const morgan = require("morgan");
-const cors = require("cors");
+import express from "express";
+import morgan from "morgan";
+import cors from "cors";
+import { userRoutes } from "./Routes/users.js";
+import {shipmentsRoutes} from "./Routes/shipments.js";
 
 const app = express();
-
-const userRoutes = require("./routes/users");
-const shipmentsRoutes = require("./routes/shipments");
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -36,6 +35,6 @@ app.use((error, req, res, next) => {
 });
 
 // Start server
-app.listen(process.env.APP_PORT, () => {
-  console.log(`Server listening on port ${process.env.APP_PORT}`);
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
 });
