@@ -1,19 +1,19 @@
-const fs = require("fs/promises");
+const fs = require("fs/promises")
 
 const generateError = (message, status) => {
-  const error = new Error(message);
-  error.httpStatus = status;
-  return error;
-};
+  const error = new Error(message)
+  error.httpStatus = status
+  return error
+}
 
 const createPathIfNotExists = async (path) => {
   try {
-    await fs.access(path);
+    await fs.access(path)
   } catch {
-    await fs.mkdir(path);
+    await fs.mkdir(path)
   }
-};
+}
 module.exports = {
   generateError,
   createPathIfNotExists,
-};
+}

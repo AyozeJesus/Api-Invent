@@ -1,5 +1,5 @@
-import { describe, expect, it, vi } from "vitest";
-const db = require("./db");
+import { describe, expect, it, vi } from "vitest"
+const db = require("./db")
 // Crea un mock de la función createPool de mysql2/promise
 vi.mock("mysql2/promise", () => {
   return {
@@ -8,28 +8,28 @@ vi.mock("mysql2/promise", () => {
         getConnection: async () => {
           return {
             release: vi.fn(),
-          };
+          }
         },
-      };
+      }
     },
-  };
-});
+  }
+})
 
 vi.mock("dotenv", () => {
   return {
     config: () => {
-      process.env.DB_HOST = "testhost";
-      process.env.DB_USER = "testuser";
-      process.env.DB_PASSWORD = "testpassword";
-      process.env.DB_DATABASE = "testdb";
+      process.env.DB_HOST = "testhost"
+      process.env.DB_USER = "testuser"
+      process.env.DB_PASSWORD = "testpassword"
+      process.env.DB_DATABASE = "testdb"
     },
-  };
-});
+  }
+})
 
 describe("Database", () => {
   it("should get a connection", async () => {
-    const connection = await db.getConnection();
+    const connection = await db.getConnection()
 
-    expect(connection).toBeDefined();
-  });
-});
+    expect(connection).toBeDefined()
+  })
+})
