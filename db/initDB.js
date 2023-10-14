@@ -1,32 +1,32 @@
-require("dotenv").config()
-const { getConnection } = require("./db")
+require("dotenv").config();
+const { getConnection } = require("./db");
 
 async function main() {
-  let connection
+  let connection;
   try {
-    connection = await getConnection()
-    console.log("connected")
-    console.log("Dropping existing tables")
-    await dropTableIfExists(connection, "shipments")
-    await dropTableIfExists(connection, "carriers")
-    await dropTableIfExists(connection, "users")
+    connection = await getConnection();
+    console.log("connected");
+    console.log("Dropping existing tables");
+    await dropTableIfExists(connection, "shipments");
+    await dropTableIfExists(connection, "carriers");
+    await dropTableIfExists(connection, "users");
 
-    console.log("Creating tables")
+    console.log("Creating tables");
 
-    await createUsersTable(connection)
-    await createCarriersTable(connection)
-    await createShipmentsTable(connection)
+    await createUsersTable(connection);
+    await createCarriersTable(connection);
+    await createShipmentsTable(connection);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   } finally {
-    if (connection) connection.release()
-    process.exit()
+    if (connection) connection.release();
+    process.exit();
   }
 }
 
 async function dropTableIfExists(connection, tableName) {
-  await connection.query(`DROP TABLE IF EXISTS ${tableName}`)
-  console.log(`Table ${tableName} dropped if exists.`)
+  await connection.query(`DROP TABLE IF EXISTS ${tableName}`);
+  console.log(`Table ${tableName} dropped if exists.`);
 }
 
 async function createUsersTable(connection) {
@@ -40,20 +40,20 @@ async function createUsersTable(connection) {
     email VARCHAR(90) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-  )`)
-  console.log("Table users created.")
+  )`);
+  console.log("Table users created.");
 }
 
 async function createCarriersTable(connection) {
   await connection.query(`CREATE TABLE IF NOT EXISTS carriers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL
-  )`)
-  console.log("Table carriers created.")
+  )`);
+  console.log("Table carriers created.");
   await connection.query(
-    `INSERT INTO carriers (name) VALUES ('Correos'), ('Seur'), ('Invent')`,
-  )
-  console.log("Carriers Correos, Seur e Invent inserted.")
+    `INSERT INTO carriers (name) VALUES ('Correos'), ('Seur'), ('Invent')`
+  );
+  console.log("Carriers Correos, Seur e Invent inserted.");
 }
 
 async function createShipmentsTable(connection) {
@@ -67,8 +67,8 @@ async function createShipmentsTable(connection) {
     shipping_company VARCHAR(255) NOT NULL,
     package_category VARCHAR(50) NOT NULL, 
     price DECIMAL(10, 2) NOT NULL
-  )`)
-  console.log("Table shipments created.")
+  )`);
+  console.log("Table shipments created.");
 }
 
-main()
+main();
