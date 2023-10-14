@@ -8,7 +8,7 @@ const {
 } = require("../controllers/shipments");
 const { authUser } = require("../middlewares/auth");
 
-router.post("/shipments", authUser, createShipmentController);
+router.post("/shipments", createShipmentController);
 
 router.delete("/shipments/:id", authUser, deleteShipmentByIdController);
 
