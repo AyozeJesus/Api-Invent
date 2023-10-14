@@ -4,8 +4,16 @@
   "description": "Base de datos para Invent",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "test": "npm run test:unit",
+    "test:all": "vitest",
+    "test:integration": "node --env-file=.env node_modules/.bin/vitest --run --config vite.config.integration.js",
+    "test:unit": "vitest --run --config vite.config.unit.js",
+    "lint:fix": "eslint . --fix",
+    "lint:check": "eslint .",
+    "format:fix": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [],
   "author": "",
