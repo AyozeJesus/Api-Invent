@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 import {
   createShipment,
   listShipments,
   getShipmentById,
   deleteShipmentById,
 } from "../../../application/shipments.js";
-import { generateError } from "../helpers.js";
+import { generateError } from "../../../application/helpers.js";
 
 import {
   newShipmentSchema,

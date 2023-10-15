@@ -1,8 +1,10 @@
-import { getConnection } from "../infrastructure/UserRepository/db.js";
-import { generateError } from "../infrastructure/API/helpers.js";
+import { getConnection } from "../infrastructure/UserRepository/MySQLClient.js";
+import { generateError } from "./helpers.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
+dotenv.config();
 export const createUser = async ({ username, email, password }) => {
   let connection;
   try {
@@ -92,9 +94,9 @@ export const login = async (email, password) => {
         expiresIn: "30d",
       }
     );
-
     return token;
   } catch (err) {
+    console.log(err);
     throw generateError(
       "Email or password is incorrect, please check your data.",
       404

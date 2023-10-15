@@ -1,6 +1,5 @@
 require("dotenv").config();
-
-import {getConnection} from "./db";
+import { getConnection } from "../../UserRepository/MySQLClient";
 
 async function main() {
   let connection;
