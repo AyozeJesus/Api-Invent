@@ -12,46 +12,14 @@ export const createShipment = async ({
   recipient_name,
   sender_name,
   weight_kg,
-  // eslint-disable-next-line no-unused-vars
-  shipping_company,
 }) => {
   let connection;
   try {
     connection = await getConnection();
+
     const package_category = calculatePackageCategory(weight_kg);
-
-    let shipping_company;
-
-    const postalCodeNumber = parseInt(postal_code);
-
-    if (postalCodeNumber >= 15000 && postalCodeNumber <= 19999) {
-      shipping_company = "Correos";
-    } else if (postalCodeNumber >= 20000 && postalCodeNumber <= 25000) {
-      shipping_company = "Seur";
-    } else {
-      shipping_company = "INVENT";
-    }
-
-    let price;
-    switch (package_category) {
-      case "Paquete ultra ligero":
-        price = weight_kg * 5;
-        break;
-      case "Paquete ligero":
-        price = weight_kg * 5 + 1;
-        break;
-      case "Paquete estándar":
-        price = weight_kg * 10;
-        break;
-      case "Paquete pesado":
-        price = weight_kg * 5 + weight_kg + 75;
-        break;
-      case "Gran volumen":
-        price = (weight_kg - 10) * 7.5 + 130 + weight_kg;
-        break;
-      default:
-        price = 0;
-    }
+    const shipping_company = selectCarrier(postal_code);
+    const price = calculatePrice(weight_kg, package_category);
 
     const insertUserQuery = `INSERT INTO shipments (destination_address, postal_code, recipient_name, sender_name, weight_kg, shipping_company, package_category, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
     const [insertResult] = await connection.query(insertUserQuery, [
