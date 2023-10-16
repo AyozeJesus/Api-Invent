@@ -13,6 +13,12 @@ export const createShipment = async ({
   sender_name,
   weight_kg,
 }) => {
+  if (!/^\d{5}$/.test(postal_code)) {
+    throw new Error(
+      "Please enter a 5-digit postal code between 00001 and 99999."
+    );
+  }
+
   let connection;
   try {
     connection = await getConnection();
