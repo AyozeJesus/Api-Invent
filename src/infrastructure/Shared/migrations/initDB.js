@@ -1,5 +1,6 @@
-require("dotenv").config();
-import { getConnection } from "../../UserRepository/MySQLClient";
+import dotenv from "dotenv";
+dotenv.config();
+import { getConnection } from "../../UserRepository/MySQLClient.js";
 
 async function main() {
   let connection;
@@ -35,6 +36,7 @@ async function createUsersTable(connection) {
     username VARCHAR(50) NOT NULL UNIQUE,
     name VARCHAR(50),
     last_name VARCHAR(50),
+    category VARCHAR(15),
     address VARCHAR(255),
     gender VARCHAR(10),
     email VARCHAR(90) NOT NULL UNIQUE,

@@ -5,7 +5,14 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config();
-export const createUser = async ({ username, email, password }) => {
+export const createUser = async ({ username, email, password, category }) => {
+  if (category !== "trabajador" && category !== "administrador") {
+    throw generateError(
+      'The category can only be "trabajador" or "administrador"',
+      400
+    );
+  }
+
   let connection;
   try {
     connection = await getConnection();
@@ -21,21 +28,21 @@ export const createUser = async ({ username, email, password }) => {
 
     if (emailExist.length > 0 && usernameExist.length > 0) {
       throw generateError(
-        `"Username" and "email" already exist in our database. Please enter a different username and email.`,
+        '"Username" and "email" already exist in our database. Please enter a different username and email.',
         409
       );
     }
 
     if (emailExist.length > 0) {
       throw generateError(
-        `"Email" already exists in our database. Please enter a different email.`,
+        '"Email" already exists in our database. Please enter a different email.',
         409
       );
     }
 
     if (usernameExist.length > 0) {
       throw generateError(
-        `"Username" already exists in our database. Please enter a different username.`,
+        '"Username" already exists in our database. Please enter a different username.',
         409
       );
     }
@@ -44,11 +51,12 @@ export const createUser = async ({ username, email, password }) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     const insertUserQuery =
-      "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+      "INSERT INTO users (username, email, password, category) VALUES (?, ?, ?, ?)";
     const [insertResult] = await connection.query(insertUserQuery, [
       username,
       email,
       hashedPassword,
+      category,
     ]);
 
     return insertResult.insertId;
@@ -142,5 +150,23 @@ export const getUserByEmail = async (email) => {
     return result[0];
   } finally {
     if (connection) connection.release();
+  }
+};
+
+export const getUsersByCategory = async (category) => {
+  let connection;
+  try {
+    connection = await getConnection();
+
+    const [users] = await connection.query(
+      "SELECT * FROM users WHERE category = ?",
+      [category]
+    );
+
+    return users;
+  } finally {
+    if (connection) {
+      connection.release();
+    }
   }
 };

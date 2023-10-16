@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { generateError } from "../../../application/helpers.js";
 import {
   createUser,
   login,
   getUserById,
   getUserByEmail,
+  getUsersByCategory,
 } from "../../../application/users.js";
 import { userSchema, loginSchema } from "../schemas/usersSchemas.js";
 import { v4 as uuidv4 } from "uuid";
@@ -22,9 +24,17 @@ export const validateNewUser = (req, res, next) => {
 };
 export const createNewUser = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, category } = req.body;
+
+    if (category !== "trabajador" && category !== "administrador") {
+      throw generateError(
+        'Invalid category. Category must be "trabajador" or "administrador."',
+        400
+      );
+    }
+
     const token = generateActivationToken();
-    const userId = await createUser({ username, email, password });
+    const userId = await createUser({ username, email, password, category });
     res.status(200).json({ message: "User registered successfully.", userId });
   } catch (err) {
     next(err);
@@ -63,6 +73,24 @@ export const getUserController = async (req, res, next) => {
     }
     const user = await getUserById(user_id);
     res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getUsersByCategoryController = async (req, res, next) => {
+  try {
+    const { category } = req.params; // Suponemos que la categoría se pasa como un parámetro en la URL
+
+    if (category !== "trabajador" && category !== "administrador") {
+      throw generateError(
+        'Invalid category. Category must be "trabajador" or "administrador."',
+        400
+      );
+    }
+
+    const users = await getUsersByCategory(category);
+    res.status(200).json(users);
   } catch (err) {
     next(err);
   }
