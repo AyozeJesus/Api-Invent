@@ -16,9 +16,13 @@ userRoutes.post("/user/register", newUserController);
 userRoutes.post("/user/login", loginController);
 
 // Obtener usuario por ID
-userRoutes.get("/user/:id", authUser, getUserController);
+userRoutes.get("/user/:id", authUser, authUser, getUserController);
 
 // Ruta para obtener usuarios por categoría
-userRoutes.get("/users/category/:category", getUsersByCategoryController);
+userRoutes.get(
+  "/users/category/:category",
+  authUser,
+  getUsersByCategoryController
+);
 
 export { userRoutes };

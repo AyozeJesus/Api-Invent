@@ -6,6 +6,7 @@ import {
   calculatePrice,
   selectCarrier,
 } from "../../../domain/utils/shipmentUtils.js";
+import bcrypt from "bcrypt";
 
 async function main() {
   let connection;
@@ -41,7 +42,7 @@ async function createUsersTable(connection) {
     username VARCHAR(50) NOT NULL UNIQUE,
     name VARCHAR(50),
     last_name VARCHAR(50),
-    category ENUM('trabajador', 'administrador'),  -- Cambia a ENUM para definir categorías
+    category ENUM('trabajador', 'administrador'), 
     address VARCHAR(255),
     gender VARCHAR(10),
     email VARCHAR(90) NOT NULL UNIQUE,
@@ -89,6 +90,8 @@ async function createUsersTable(connection) {
   ];
 
   for (const user of usersToInsert) {
+    const saltRounds = 10;
+    user.password = await bcrypt.hash(user.password, saltRounds);
     await connection.query(`INSERT INTO users SET ?`, user);
   }
 
