@@ -1,19 +1,14 @@
 /* eslint-disable no-unused-vars */
 import { generateError } from "../../../application/helpers.js";
-import {
-  createUser,
-  login,
-  getUserById,
-  getUserByEmail,
-  getUsersByCategory,
-} from "../../../application/users.js";
+import UserService from "../../../application/users.js";
 import { userSchema, loginSchema } from "../schemas/usersSchemas.js";
 import { v4 as uuidv4 } from "uuid";
+
+const userService = new UserService();
 
 export const generateActivationToken = () => {
   return uuidv4();
 };
-
 export const validateNewUser = (req, res, next) => {
   const { error } = userSchema.validate(req.body);
 
@@ -22,7 +17,8 @@ export const validateNewUser = (req, res, next) => {
   }
   next();
 };
-export const createNewUser = async (req, res, next) => {
+
+export const newUserController = async (req, res, next) => {
   try {
     const { username, email, password, category } = req.body;
 
@@ -34,14 +30,17 @@ export const createNewUser = async (req, res, next) => {
     }
 
     const token = generateActivationToken();
-    const userId = await createUser({ username, email, password, category });
+    const userId = await userService.createUser({
+      username,
+      email,
+      password,
+      category,
+    });
     res.status(200).json({ message: "User registered successfully.", userId });
   } catch (err) {
     next(err);
   }
 };
-
-export const newUserController = [validateNewUser, createNewUser];
 
 export const loginController = async (req, res, next) => {
   try {
@@ -51,11 +50,11 @@ export const loginController = async (req, res, next) => {
       throw generateError(error.details[0].message, 404);
     }
     const { email, password } = req.body;
-    const user = await getUserByEmail(email);
+    const user = await userService.login(email, password);
     if (!user) {
       throw generateError("Invalid email or password.", 401);
     }
-    const token = await login(email, password);
+    const token = await userService.login(email, password);
     res.status(200).json({ token });
   } catch (err) {
     next(err);
@@ -71,7 +70,7 @@ export const getUserController = async (req, res, next) => {
         403
       );
     }
-    const user = await getUserById(user_id);
+    const user = await userService.getUserById(user_id);
     res.status(200).json(user);
   } catch (err) {
     next(err);
@@ -89,7 +88,7 @@ export const getUsersByCategoryController = async (req, res, next) => {
       );
     }
 
-    const users = await getUsersByCategory(category);
+    const users = await userService.getUsersByCategory(category);
     res.status(200).json(users);
   } catch (err) {
     next(err);

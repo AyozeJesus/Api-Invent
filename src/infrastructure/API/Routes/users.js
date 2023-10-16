@@ -16,7 +16,7 @@ userRoutes.post("/user/register", newUserController);
 userRoutes.post("/user/login", loginController);
 
 // Obtener usuario por ID
-userRoutes.get("/user/:id", authUser, authUser, getUserController);
+userRoutes.get("/user/:id", authUser, getUserController);
 
 // Ruta para obtener usuarios por categoría
 userRoutes.get(
