@@ -80,7 +80,7 @@ export const getUserController = async (req, res, next) => {
 
 export const getUsersByCategoryController = async (req, res, next) => {
   try {
-    const { category } = req.params; // Suponemos que la categoría se pasa como un parámetro en la URL
+    const { category } = req.params;
 
     if (category !== "trabajador" && category !== "administrador") {
       throw generateError(

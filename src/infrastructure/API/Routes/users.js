@@ -3,6 +3,7 @@ import {
   newUserController,
   loginController,
   getUserController,
+  getUsersByCategoryController,
 } from "../Controllers/Users.js";
 import { authUser } from "../Middlewares/auth.js";
 
@@ -16,5 +17,8 @@ userRoutes.post("/user/login", loginController);
 
 // Obtener usuario por ID
 userRoutes.get("/user/:id", authUser, getUserController);
+
+// Ruta para obtener usuarios por categoría
+userRoutes.get("/users/category/:category", getUsersByCategoryController);
 
 export { userRoutes };
