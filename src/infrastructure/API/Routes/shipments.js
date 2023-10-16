@@ -10,11 +10,7 @@ import { authUser } from "../Middlewares/auth.js";
 const shipmentsRoutes = express.Router();
 
 shipmentsRoutes.post("/shipments", createShipmentController);
-shipmentsRoutes.delete(
-  "/shipments/:id",
-  authUser,
-  deleteShipmentByIdController
-);
+shipmentsRoutes.delete("/shipments/:id", deleteShipmentByIdController);
 shipmentsRoutes.get("/shipments/:id", getShipmentByIdController);
 shipmentsRoutes.get("/shipments", listShipmentsController);
 

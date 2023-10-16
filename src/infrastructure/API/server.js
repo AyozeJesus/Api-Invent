@@ -2,7 +2,8 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import { userRoutes } from "./Routes/users.js";
-import {shipmentsRoutes} from "./Routes/shipments.js";
+import { shipmentsRoutes } from "./Routes/shipments.js";
+import carriersRouter from "./Routes/carriers.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 // RUTAS
 app.use("/", userRoutes);
 app.use("/", shipmentsRoutes);
+app.use("/", carriersRouter);
 
 // Middleware para el error 404
 app.use((req, res) => {
