@@ -91,7 +91,7 @@ export const getShipmentById = async (id) => {
       throw generateError(`the shipment with ID: ${id} not found`, 404);
     }
 
-    return [shipment[0]];
+    return shipment[0];
   } finally {
     if (connection) connection.release();
   }
