@@ -1,119 +1,108 @@
-# API de Recomendaciones de Viajes v1.0
+# API de INVENT - Backend del Panel de Administración 1.0
 
-La API de Recomendaciones de Viajes permite a los usuarios publicar y comentar recomendaciones de sitios o experiencias poco conocidas de viajes. Los usuarios pueden buscar recomendaciones por lugar, categoría o usuario, ordenar los resultados de búsqueda por votos, ver detalles de una recomendación, iniciar sesión y registrarse en la plataforma.
+## Descripción
 
-## Funcionalidades
+La API de INVENT es el backend de un panel de administración para una empresa intermediaria de envíos de mercancías llamada INVENT. Este panel está protegido y requiere iniciar sesión para acceder a él. Los trabajadores pueden crear envíos a través de la plataforma, añadiendo información sobre el envío. La API también se integra con una base de datos MySQL para almacenar y recuperar datos relacionados con los envíos.
 
-- Buscar recomendaciones por lugar, categoría o usuario
-- Ordenar los resultados de búsqueda por votos
-- Ver detalles de una recomendación
-- Iniciar sesión con correo electrónico y contraseña
-- Registrarse con usuario, nombre, apellido, dirección, género, correo electrónico, contraseña, biografía y foto de perfil
+## Autenticación
 
-### Usuarios registrados
+La API está protegida y requiere que los usuarios inicien sesión para acceder. Se admiten dos categorías de usuarios: "trabajador" y "administrador".
 
-Los usuarios registrados tienen acceso a las siguientes funcionalidades:
+## Configuración de la Base de Datos
 
-- Publicar recomendaciones con título, categoría, lugar, entradilla, texto y foto
-- Borrar sus propias recomendaciones
-- Publicar comentarios en las recomendaciones
-- Votar recomendaciones de otros usuarios
-- Gestionar el perfil, incluyendo foto de perfil
+La API de INVENT utiliza MySQL como base de datos para almacenar información sobre envíos, usuarios y compañías transportistas. Asegúrate de seguir estos pasos para configurar correctamente la base de datos:
 
-## Tecnologías utilizadas
+1. Instala MySQL: Si aún no tienes MySQL instalado, puedes descargarlo desde el sitio web oficial: MySQL Downloads.
 
-- Axios
-- Bcrypt
-- Cli-progress
-- Cors
-- Dotenv
-- Eslint
-- Express
-- Express-fileupload
-- Express-validator
-- Har-validator
-- Joi
-- Jsonwebtoken
-- Morgan
-- Multer
-- Mysql
-- Mysql2
-- Nanoid
-- Node-mailjet
-- Nodemailer
-- Nodemon
-- Prettier
-- Progress
-- Request
-- Sharp
-- Uuid
+2. Crea una Base de Datos: Crea una base de datos en MySQL que utilizará la API. El nombre de la base de datos debe coincidir con el que se especifica en el archivo de configuración .env. Puedes usar una herramienta como MySQL Workbench o ejecutar comandos SQL para crearla.
 
-## Rutas de la API
+3. Configuración en el Archivo .env:
 
-### Rutas de recomendaciones
+Asegúrate de que el archivo .env en la raíz de tu proyecto contenga la configuración correcta para MySQL. Debería tener variables como DB_PORT y JWT SECRET. (Existe un archivo .env.example)
 
-- Crear una nueva recomendación: POST /recommendations
-- Borrar una recomendación: DELETE /recommendations/:id
-- Obtener todas las recomendaciones por ubicación o categoría: GET /recommendations
-- Obtener una recomendación por ID: GET /recommendation/:id
-- Obtener recomendaciones ordenadas por votos: GET /recommendations/orderedByVotes
-- Obtener recomendaciones de un usuario: GET /users/:id/recommendations
-- Actualizar una recomendación: PUT /recommendations/:id
+4. MySQL Client en la API: La API de INVENT utiliza un módulo llamado MySQLClient.js para gestionar la conexión a la base de datos. Asegúrate de que este archivo esté configurado para utilizar las variables de entorno del archivo .env y los valores definidos en config.js:
 
-### Rutas de comentarios
-
-- Crear un nuevo comentario en una recomendación: POST /recommendations/comments/:id
-- Obtener comentarios por ID de recomendación: GET /recommendations/:id/comments
-- Borrar un comentario por ID: DELETE /comments/:id
-
-### Rutas de votos
-
-- Crear un nuevo voto en una recomendación: POST /votes/:idDeRecomendacion
-- Obtener los votos realizados por un usuario: GET /users/:user_id/votes
-- Borrar un voto específico: DELETE /users/:user_id/votes/:recommendation_id
-
-### Rutas de usuarios
-
-- Registrar un nuevo usuario: POST /user/register
-- Iniciar sesión: POST /user/login
-- Actualizar usuario: PUT /user/:id
-- Obtener usuario por ID: GET /user/:id
-- Modificar correo electrónico: PUT /user/email/:id
-- Modificar contraseña: PUT /user/password/:id
-
-### Rutas de correo electrónico
-
-- Enviar correo electrónico: POST /email/send
-- Activación de cuenta por correo electrónico: GET /activate-account/:token
-
-## Instalación de dependencias
-
-- Instalar las dependencias con `npm install`.
+- `address` debería ser "localhost" o la dirección de tu base de datos MySQL.
+- `user` debería ser "demo" o el usuario de tu base de datos MySQL.
+- `password` debería obtenerse de process.env.DB_PASSWORD o utilizar "password" si no se proporciona en el archivo .env.
+- `database` debería ser "invent" o el nombre de tu base de datos MySQL.
 
 ## Crear las tablas de la base de datos
 
-- Ejecuta en la terminal `node .\db\initDB.js`.
+1. Ejecuta en la terminal:
 
-Este comando permite inicializar las tablas en la base de datos utilizando Node.js. Al ejecutar este comando, se conecta a la base de datos y crea las tablas necesarias para el funcionamiento de la API. Este comando debe ser ejecutado una sola vez, antes de utilizar la API por primera vez, o en caso de que se requiera reiniciar las tablas de la base de datos.
+- npm run reset
 
-## Generar datos de ejemplo
+Este comando permite inicializar las tablas en la base de datos utilizando Node.js. Al ejecutar este comando, se conecta a la base de datos y crea las tablas necesarias para el funcionamiento de la API. Este comando debe ser ejecutado una sola vez, antes de utilizar la API por primera vez, o en caso de que se requiera reiniciar las tablas de la base de datos. Este comando ya te crea la base de datos precargada con usuarios y envíos.
 
-- Ejecuta en la terminal `node .\db\sampleData.js`.
+## Ejecutar la API
 
-Este comando generará datos de ejemplo en la base de datos. Los datos de ejemplo incluirán usuarios de ejemplo y recomendaciones asociadas a esos usuarios. Ten en cuenta que este comando generará datos de ejemplo y puede afectar los datos existentes en la base de datos. Úsalo con precaución y solo con fines de desarrollo o pruebas.
+Para ejecutar la API de INVENT, sigue estos pasos:
 
-El Script crea dos perfiles con recomendaciones, donde el correo es user1@example.com y user2@example.com con su respectiva contraseña que se hashea pero que es password123.
+1. Instalación de Dependencias: Abre una terminal en la raíz de tu proyecto y ejecuta el siguiente comando para instalar las dependencias:
 
-Recuerda que debes haber ejecutado previamente el comando `node .\db\initDB.js` para crear las tablas necesarias en la base de datos antes de ejecutar el comando `node .\db\sampleData.js`.
+- npm install
 
-## Configurar las variables de entorno
+2. Iniciar la API: Una vez instaladas las dependencias, puedes iniciar la API con el siguiente comando:
 
-- Crea un archivo `.env` en la raíz del proyecto.
-- Copia el contenido del archivo `.env.example` en el archivo `.env`.
-- Configura las variables de entorno en el archivo `.env` según la configuración de tu entorno de desarrollo.
+- npm start
 
-## Iniciar el servidor
+La API debería estar en funcionamiento y escuchando en un puerto específico. Puedes acceder a ella a través de las rutas definidas en los controladores.
 
-- Inicia el servidor con el comando `npm run start`.
+## Endpoints
 
-Con este comando, el servidor de la API comenzará a escuchar en el puerto especificado en el archivo `.env`. Ahora puedes comenzar a enviar solicitudes a la API utilizando herramientas como Postman o realizar integraciones con aplicaciones frontend.
+### Usuarios
+
+- `POST /user/register`: Registra un nuevo usuario en la plataforma. Los usuarios pueden ser de las categorías "trabajador" o "administrador".
+
+- `POST /user/login`: Inicia sesión en la plataforma.
+
+- `GET /user/:id`: Obtiene la información de un usuario por su ID.
+
+- `GET /users/category/:category`: Obtiene una lista de usuarios por categoría.
+
+### Envíos
+
+- `POST /shipments`: Crea un nuevo envío proporcionando detalles como dirección de destino, código postal, nombres del destinatario y remitente, y peso del envío. La API elegirá automáticamente la empresa transportista y calculará el precio.
+
+- `GET /shipments`: Obtiene una lista de todos los envíos creados.
+
+- `GET /shipments/:id`: Obtiene detalles de un envío por su ID.
+
+- `DELETE /shipments/:id`: Elimina un envío por su ID.
+
+### Empresas Transportistas
+
+- `POST /carrier`: Crea una nueva empresa transportista.
+
+- `GET /carriers`: Obtiene una lista de todas las empresas transportistas.
+
+- `GET /carrier/:id`: Obtiene detalles de una empresa transportista por su ID.
+
+- `PUT /carrier/:id`: Actualiza el nombre de una empresa transportista por su ID.
+
+- `DELETE /carrier/:id`: Elimina una empresa transportista por su ID.
+
+## Tecnologías utilizadas
+
+- Node.js: La plataforma en la que se basa la aplicación.
+
+- Express.js: Un framework web para Node.js, utilizado en la construcción de la API.
+
+- Cors: Un middleware para Express que se utiliza para habilitar las solicitudes de recursos cruzados.
+
+- Dotenv: Un paquete para cargar variables de entorno desde un archivo .env.
+
+- Joi: Una librería de validación de datos para Node.js, utilizada para validar datos en la aplicación.
+
+- JsonWebToken (jsonwebtoken): Una librería para crear y verificar tokens de autenticación JWT.
+
+- Morgan: Un middleware para Express que se utiliza para el registro de solicitudes HTTP.
+
+- mysql2: Un controlador MySQL para Node.js, utilizado para interactuar con la base de datos MySQL.
+
+- mysql2-promise: Una biblioteca que proporciona funciones de promesa para trabajar con mysql2.
+
+- UUID: Una biblioteca para la generación de identificadores únicos (UUID).
+
+- Vitest: Un marco de prueba para aplicaciones Vue 3. Se utiliza para las pruebas del proyecto.
