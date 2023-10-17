@@ -1,4 +1,4 @@
-import { getConnection } from "../infrastructure/Database/MySQLClient.js";
+import { getConnection } from "../../infrastructure/Database/MySQLClient.js";
 
 export class CarrierRepository {
   async createCarrier(name) {

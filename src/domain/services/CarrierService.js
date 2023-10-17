@@ -1,7 +1,7 @@
-import { generateError } from "../domain/utils/helpers.js";
-import { CarrierRepository } from "./CarrierRepository.js";
+import { generateError } from "../../domain/utils/helpers.js";
+import { CarrierRepository } from "../../domain/repository/CarrierRepository.js";
 
-export class CarrierService {
+class CarrierService {
   constructor() {
     this.carrierRepository = new CarrierRepository();
   }
@@ -35,3 +35,5 @@ export class CarrierService {
     return await this.carrierRepository.deleteCarrierById(id);
   }
 }
+
+export default CarrierService;

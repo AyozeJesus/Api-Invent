@@ -1,4 +1,4 @@
-import { CarrierService } from "../../services/CarrierService.js";
+import CarrierService from "../../../domain/services/CarrierService.js";
 
 const carrierService = new CarrierService();
 
