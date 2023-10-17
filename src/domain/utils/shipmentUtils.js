@@ -39,3 +39,10 @@ export function selectCarrier(postal_code) {
     return "INVENT";
   }
 }
+
+export function isValidPostalCode(postalCode) {
+  const postalCodePattern = /^\d{5}$/;
+  return (
+    postalCodePattern.test(postalCode) && postalCode >= 1 && postalCode <= 99999
+  );
+}

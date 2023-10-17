@@ -1,4 +1,4 @@
-import { getConnection } from "../infrastructure/UserRepository/MySQLClient.js";
+import { getConnection } from "../infrastructure/Database/MySQLClient.js";
 import { generateError } from "./helpers.js";
 export const createCarrier = async (name) => {
   let connection;

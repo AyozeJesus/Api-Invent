@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { generateError } from "../../../application/helpers.js";
-import UserService from "../../../application/users.js";
-import { userSchema, loginSchema } from "../schemas/usersSchemas.js";
+import UserService from "../../../domain/services/UserService.js";
+import { userSchema, loginSchema } from "../Schemas/usersSchemas.js";
 import { v4 as uuidv4 } from "uuid";
 
 const userService = new UserService();

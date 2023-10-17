@@ -1,4 +1,4 @@
-import { getConnection } from "../../infrastructure/UserRepository/MySQLClient.js";
+import { getConnection } from "../../infrastructure/Database/MySQLClient.js";
 import bcrypt from "bcrypt";
 import { generateError } from "../../application/helpers.js";
 import jwt from "jsonwebtoken";
