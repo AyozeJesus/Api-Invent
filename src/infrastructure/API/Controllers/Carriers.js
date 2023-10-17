@@ -1,24 +1,19 @@
-import {
-  createCarrier,
-  listCarriers,
-  getCarrierById,
-  updateCarrierName,
-  deleteCarrierById,
-} from "../../../application/carriers.js";
+import { CarrierService } from "../../services/CarrierService.js";
+
+const carrierService = new CarrierService();
 
 export const validateNewCarrier = (req, res, next) => {
   const { name } = req.body;
   if (!name || typeof name !== "string") {
     return res.status(400).json({ error: "Invalid carrier name." });
   }
-
   next();
 };
 
 export const createCarrierController = async (req, res, next) => {
   try {
     const { name } = req.body;
-    const carrierId = await createCarrier(name);
+    const carrierId = await carrierService.createCarrier(name);
     res
       .status(201)
       .json({ message: "Carrier created successfully.", carrierId });
@@ -29,7 +24,7 @@ export const createCarrierController = async (req, res, next) => {
 
 export const listCarriersController = async (req, res, next) => {
   try {
-    const carriers = await listCarriers();
+    const carriers = await carrierService.listCarriers();
     res.status(200).json(carriers);
   } catch (error) {
     next(error);
@@ -39,7 +34,7 @@ export const listCarriersController = async (req, res, next) => {
 export const getCarrierByIdController = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const carrier = await getCarrierById(id);
+    const carrier = await carrierService.getCarrierById(id);
 
     if (!carrier) {
       res.status(404).json({ message: "Carrier not found." });
@@ -55,7 +50,7 @@ export const updateCarrierController = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
-    await updateCarrierName(id, name);
+    await carrierService.updateCarrierName(id, name);
     res.status(200).json({ message: "Carrier name updated successfully." });
   } catch (error) {
     next(error);
@@ -65,12 +60,12 @@ export const updateCarrierController = async (req, res, next) => {
 export const deleteCarrierByIdController = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const carrier = await getCarrierById(id);
+    const carrier = await carrierService.getCarrierById(id);
 
     if (!carrier) {
       res.status(404).json({ message: "Carrier not found." });
     } else {
-      await deleteCarrierById(id);
+      await carrierService.deleteCarrierById(id);
       res.status(200).json({ message: "Carrier deleted successfully." });
     }
   } catch (error) {

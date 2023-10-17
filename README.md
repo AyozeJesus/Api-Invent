@@ -2,11 +2,7 @@
 
 ## Descripción
 
-La API de INVENT es el backend de un panel de administración para una empresa intermediaria de envíos de mercancías llamada INVENT. Este panel está protegido y requiere iniciar sesión para acceder a él. Los trabajadores pueden crear envíos a través de la plataforma, añadiendo información sobre el envío. La API también se integra con una base de datos MySQL para almacenar y recuperar datos relacionados con los envíos.
-
-## Autenticación
-
-La API está protegida y requiere que los usuarios inicien sesión para acceder. Se admiten dos categorías de usuarios: "trabajador" y "administrador".
+La API de INVENT es el backend de un panel de administración para una empresa intermediaria de envíos de mercancías llamada INVENT. Los trabajadores pueden crear envíos a través de la plataforma, añadiendo información sobre el envío. La API también se integra con una base de datos MySQL para almacenar y recuperar datos relacionados con los envíos.
 
 ## Configuración de la Base de Datos
 
@@ -31,7 +27,7 @@ Asegúrate de que el archivo .env en la raíz de tu proyecto contenga la configu
 
 1. Ejecuta en la terminal:
 
-- npm run reset
+- npm run migrate
 
 Este comando permite inicializar las tablas en la base de datos utilizando Node.js. Al ejecutar este comando, se conecta a la base de datos y crea las tablas necesarias para el funcionamiento de la API. Este comando debe ser ejecutado una sola vez, antes de utilizar la API por primera vez, o en caso de que se requiera reiniciar las tablas de la base de datos. Este comando ya te crea la base de datos precargada con usuarios y envíos.
 

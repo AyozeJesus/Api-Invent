@@ -14,7 +14,7 @@
     "lint:check": "eslint .",
     "format:fix": "prettier --write .",
     "format:check": "prettier --check .",
-    "reset": "node src/infrastructure/Shared/migrations/initDB.js"
+    "migrate": "node src/infrastructure/Shared/migrations/initDB.js"
   },
   "keywords": [],
   "author": "",
