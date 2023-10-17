@@ -1,5 +1,5 @@
 import ShipmentService from "../../../domain/services/ShipmentService.js";
-import { generateError } from "../../../application/helpers.js";
+import { generateError } from "../../../domain/utils/helpers.js";
 
 import {
   newShipmentSchema,

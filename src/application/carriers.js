@@ -1,5 +1,5 @@
 import { getConnection } from "../infrastructure/Database/MySQLClient.js";
-import { generateError } from "./helpers.js";
+import { generateError } from "../domain/utils/helpers.js";
 export const createCarrier = async (name) => {
   let connection;
   try {

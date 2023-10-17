@@ -1,4 +1,4 @@
-import { generateError } from "../../../application/helpers.js";
+import { generateError } from "../../../domain/utils/helpers.js";
 import jwt from "jsonwebtoken";
 
 export const authUser = (req, res, next) => {

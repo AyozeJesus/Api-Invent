@@ -1,6 +1,6 @@
 import { getConnection } from "../../infrastructure/Database/MySQLClient.js";
 import bcrypt from "bcrypt";
-import { generateError } from "../../application/helpers.js";
+import { generateError } from "../../domain/utils/helpers.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
