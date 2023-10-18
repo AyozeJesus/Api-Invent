@@ -63,14 +63,7 @@ export const loginController = async (req, res, next) => {
 
 export const getUserController = async (req, res, next) => {
   try {
-    const user_id = req.params.id;
-    if (Number(req.userId) !== Number(user_id)) {
-      throw generateError(
-        "Unauthorized! You do not have permission to modify another user's data.",
-        403
-      );
-    }
-    const user = await userService.getUserById(user_id);
+    const user = await userService.getUserById(req.params.id);
     res.status(200).json(user);
   } catch (err) {
     next(err);
