@@ -79,6 +79,14 @@ La API debería estar en funcionamiento y escuchando en un puerto específico. P
 
 - `DELETE /carrier/:id`: Elimina una empresa transportista por su ID.
 
+## Ejecutar test
+
+Para ejecutar los test de la API de INVENT, sigue estos pasos:
+
+1. Abre una terminal en la raíz de tu proyecto y ejecuta el siguiente comando para ejecutar los test:
+
+- npm run test
+- 
 ## Tecnologías utilizadas
 
 - Node.js: La plataforma en la que se basa la aplicación.
@@ -102,3 +110,4 @@ La API debería estar en funcionamiento y escuchando en un puerto específico. P
 - UUID: Una biblioteca para la generación de identificadores únicos (UUID).
 
 - Vitest: Un marco de prueba para aplicaciones Vue 3. Se utiliza para las pruebas del proyecto.
+
